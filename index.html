@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Моя биография — шаблон</title>
+  <style>
+    :root{
+      --bg1: #0f0a1a;
+      --bg2: #12081f;
+      --accent1: #7b5cff;
+      --accent2: #b68cff;
+      --glass: rgba(255,255,255,0.04);
+      --text: #e9e7ff;
+      --muted: #bfb8dd;
+      --shadow: 0 8px 30px rgba(10,6,20,0.6);
+      --ease: cubic-bezier(.16,.8,.24,1);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(123,92,255,0.12), transparent 8%),
+                  radial-gradient(900px 400px at 95% 90%, rgba(182,140,255,0.08), transparent 10%),
+                  linear-gradient(180deg,var(--bg1),var(--bg2));
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      display:flex;align-items:center;justify-content:center;padding:48px;
+      overflow:auto;
+    }
+
+    .float-shape{
+      position:fixed;border-radius:50%;pointer-events:none;mix-blend-mode:screen;filter:blur(40px);opacity:0.45;transform:translateZ(0);
+      animation: drift 14s linear infinite;
+    }
+    .shape-a{width:420px;height:420px;background:linear-gradient(135deg,var(--accent1),var(--accent2));left:-120px;top:-80px}
+    .shape-b{width:300px;height:300px;background:linear-gradient(135deg,var(--accent2),#2b1a4f);right:-80px;bottom:-100px;animation-duration:18s}
+    @keyframes drift{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-18px) translateX(10px)}100%{transform:translateY(0) translateX(0)}}
+
+    .card{
+      width:min(980px,96%);
+      display:grid;grid-template-columns:320px 1fr;gap:28px;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:var(--shadow);
+      backdrop-filter:blur(8px) saturate(120%);
+      transform:translateY(10px);opacity:0;animation:pop .7s var(--ease) forwards;
+    }
+    @keyframes pop{to{transform:none;opacity:1}}
+
+    .profile{
+      padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);
+      display:flex;flex-direction:column;align-items:center;gap:16px;position:relative;overflow:hidden
+    }
+    .avatar{
+      width:160px;height:160px;border-radius:20px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:36px;color:rgba(255,255,255,0.95);box-shadow:0 10px 30px rgba(123,92,255,0.18) inset;}
+    .name{font-size:20px;font-weight:700}
+    .subtitle{color:var(--muted);font-size:13px}
+    .socials{display:flex;gap:10px;margin-top:6px}
+    .sbtn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:10px;display:inline-flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;transition:all .18s var(--ease)}
+    .sbtn:hover{transform:translateY(-4px);box-shadow:0 10px 30px rgba(123,92,255,0.08);border-color:rgba(123,92,255,0.25)}
+
+    .content{padding:8px 6px 6px 6px;display:flex;flex-direction:column;gap:12px}
+    .lang-toggle{align-self:flex-end}
+    .toggle{background:var(--glass);padding:6px;border-radius:999px;display:inline-flex;gap:6px;border:1px solid rgba(255,255,255,0.03)}
+    .toggle button{background:transparent;border:0;padding:8px 12px;border-radius:999px;color:var(--muted);cursor:pointer;transition:all .18s var(--ease)}
+    .toggle button.active{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#0b0820;font-weight:700;box-shadow:0 6px 22px rgba(123,92,255,0.12)}
+
+    .section{background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.03)}
+    .section h3{margin:0;font-size:16px}
+    .bio{line-height:1.5;color:var(--muted);margin-top:8px}
+
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:10px}
+    .svc{padding:12px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.007));border:1px solid rgba(255,255,255,0.02);transition:transform .18s var(--ease)}
+    .svc:hover{transform:translateY(-6px)}
+    .svc h4{margin:0 0 6px 0}
+    .svc p{margin:0;color:var(--muted);font-size:13px}
+
+    .cta-row{display:flex;gap:10px;margin-top:12px}
+    .primary{padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border:0;color:#0b0820;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(123,92,255,0.12);transition:transform .18s var(--ease)}
+    .primary:hover{transform:translateY(-4px)}
+    .ghost{padding:10px 12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);cursor:pointer}
+
+    .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;color:var(--muted);font-size:13px}
+
+    @media (max-width:880px){
+      .card{grid-template-columns:1fr;gap:14px;padding:18px}
+      .avatar{width:140px;height:140px}
+    }
+
+    .editable{outline:none;border-bottom:1px dashed rgba(255,255,255,0.03);padding:2px}
+
+    .reveal{opacity:0;transform:translateY(6px);animation:reveal .6s var(--ease) forwards}
+    .reveal.delay{animation-delay:.12s}
+    @keyframes reveal{to{opacity:1;transform:none}}
+
+  </style>
+</head>
+<body>
+  <div class="float-shape shape-a" aria-hidden></div>
+  <div class="float-shape shape-b" aria-hidden></div>
+
+  <main class="card" role="main">
+    <aside class="profile">
+        <img class="avatar" id="avatar" src="https://cdn.discordapp.com/avatars/1157331223144841359/b7938b8fdda146b061b82eda8c7e322c.webp?format=webp" alt="Avatar">
+      <div class="name" id="name">Sm1CKBall</div>
+      <div class="subtitle" id="title">Web Developer</div>
+
+      <div class="socials" style="margin-top:12px">
+        <a class="sbtn" href="https://youtube.com/@sm1ckkk?si=eJb9o4uMgfAChDYJ" id="social-1">YouTube</a>
+        <a class="sbtn" href="https://vk.com/id796802402" id="social-2">VK</a>
+        <a class="sbtn" href="https://sm1ckkk.github.io" id="social-3">Website</a>
+      </div>
+
+      <div style="flex:1"></div>
+
+      <div class="meta">
+        <div id="location">Russia, Voronezh</div>
+        <div id="email">grusintimur95@gmail.com</div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="lang-toggle">
+        <div class="toggle" role="tablist">
+          <button id="btn-ru" class="active" aria-pressed="true">RU</button>
+          <button id="btn-en">EN</button>
+        </div>
+      </div>
+
+      <div class="section reveal">
+        <h3 id="hdr-about">Обо мне</h3>
+        <div class="bio" id="about">Я разработчик веб-сайтов и программ, а также ботов для Discord. Работаю удалённо. По всем вопросам отписывайтесь в Telegram.</div>
+
+        <div class="cta-row">
+          <a class="primary" href="https://t.me/adestruct1on" style="text-decoration: none;" id="contact-me">Связаться (Telegram)</a>
+        </div>
+      </div>
+
+      <div class="section reveal delay">
+        <h3 id="hdr-services">Услуги</h3>
+        <div class="services" id="services">
+          <div class="svc">
+            <h4>Создание Discord ботов</h4>
+            <p>Выполню бота на любой вкус и любую сложность.</p>
+          </div>
+          <div class="svc">
+            <h4>Создание веб-сайтов</h4>
+            <p>Создам сайт на любой вкус и любую сложность.</p>
+          </div>
+          <div class="svc">
+            <h4>Создание программ</h4>
+            <p>Создам программу на любой вкус и любую сложность.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section reveal delay">
+        <h3 id="hdr-links">Ссылки</h3>
+        <div class="services" id="links">
+          <a class="sbtn" href="https://t.me/adestruct1on">Telegram</a>
+          <a class="sbtn" href="https://discord.com/users/1157331223144841359">Discord</a>
+          <a class="sbtn" href="https://github.com/Sm1CKBall">GitHub</a>
+        </div>
+      </div>
+
+      <footer style="margin-top:8px;color:var(--muted);font-size:13px">© 2025 Sm1CKBall. Made with ❤️</footer>
+    </section>
+  </main>
+
+  <script>
+    const texts = {
+        ru: {
+            aboutTitle: 'Обо мне',
+            about: 'Я разработчик веб-сайтов и программ, а также ботов для Discord. Работаю удалённо. По всем вопросам отписывайтесь в Telegram.',
+            servicesTitle: 'Услуги',
+            linksTitle: 'Ссылки',
+            contact: 'Связаться (Telegram)',
+            services: [
+            { title: 'Создание Discord ботов', desc: 'Выполню бота на любой вкус и любую сложность.' },
+            { title: 'Создание веб-сайтов', desc: 'Создам сайт на любой вкус и любую сложность.' },
+            { title: 'Создание программ', desc: 'Создам программу на любой вкус и любую сложность.' }
+            ]
+        },
+        en: {
+            aboutTitle: 'About',
+            about: 'I am a web developer and programmer, as well as a bot developer for Discord. I work remotely. For all questions, write to Telegram.',
+            servicesTitle: 'Services',
+            linksTitle: 'Links',
+            contact: 'Contact (Telegram)',
+            services: [
+            { title: 'Discord Bot Development', desc: 'I will build a bot of any complexity for your needs.' },
+            { title: 'Website Development', desc: 'I can create a website of any style and complexity.' },
+            { title: 'Software Development', desc: 'I will develop a custom program tailored to your needs.' }
+            ]
+        }
+        };
+
+
+    const el = {
+      about: document.getElementById('about'),
+      hdrAbout: document.getElementById('hdr-about'),
+      hdrServices: document.getElementById('hdr-services'),
+      hdrLinks: document.getElementById('hdr-links'),
+      btnRu: document.getElementById('btn-ru'),
+      btnEn: document.getElementById('btn-en'),
+      contact: document.getElementById('contact-me'),
+      avatar: document.getElementById('avatar'),
+      name: document.getElementById('name'),
+      title: document.getElementById('title'),
+      social1: document.getElementById('social-1'),
+      social2: document.getElementById('social-2'),
+      social3: document.getElementById('social-3')
+    };
+
+    let lang = 'ru';
+    function switchLang(to){
+        lang = to;
+        const t = texts[to];
+        el.hdrAbout.textContent = t.aboutTitle;
+        el.about.textContent = t.about;
+        el.hdrServices.textContent = t.servicesTitle;
+        el.hdrLinks.textContent = t.linksTitle;
+        el.contact.textContent = t.contact;
+        el.btnRu.classList.toggle('active', to==='ru');
+        el.btnEn.classList.toggle('active', to==='en');
+        el.btnRu.setAttribute('aria-pressed', to==='ru');
+        el.btnEn.setAttribute('aria-pressed', to==='en');
+
+        const serviceNodes = document.querySelectorAll('#services .svc');
+        t.services.forEach((svc, i)=>{
+            if(serviceNodes[i]){
+            const h4 = serviceNodes[i].querySelector('h4');
+            const p = serviceNodes[i].querySelector('p');
+            if(h4) h4.textContent = svc.title;
+            if(p) p.textContent = svc.desc;
+            }
+        });
+        }
+
+
+    el.btnRu.addEventListener('click', ()=>switchLang('ru'));
+    el.btnEn.addEventListener('click', ()=>switchLang('en'));
+
+    function makeEditable(node){
+      node.addEventListener('dblclick', ()=>{
+        const prev = node.textContent;
+        const ta = document.createElement('textarea');
+        ta.value = prev; ta.style.width='100%'; ta.style.minHeight='80px'; ta.style.padding='8px'; ta.style.borderRadius='8px';
+        node.replaceWith(ta);
+        ta.focus();
+        ta.select();
+        function finish(){
+          const span = document.createElement(node.tagName.toLowerCase());
+          span.className = node.className;
+          span.id = node.id;
+          span.textContent = ta.value || prev;
+          ta.replaceWith(span);
+          makeEditable(span);
+        }
+        ta.addEventListener('blur', finish);
+        ta.addEventListener('keydown', (e)=>{ if(e.key==='Escape') { ta.value = prev; ta.blur(); } if(e.key==='Enter' && (e.ctrlKey||e.metaKey)) { ta.blur(); } });
+      });
+    }
+
+    ['about','name','title','location','email'].forEach(id=>{
+      const n = document.getElementById(id);
+      if(n) makeEditable(n);
+    });
+
+    ['social-1','social-2','social-3'].forEach(id=>{
+      const a = document.getElementById(id);
+      a.addEventListener('click',(e)=>{ if(a.href === '#'){ e.preventDefault(); const url = prompt('Вставьте URL соцсети'); if(url) a.href = url; } });
+    });
+
+    el.avatar.addEventListener('click', ()=>{
+      const initials = prompt('https/cdn.discordapp.com/avatars/1157331223144841359/b7938b8fdda146b061b82eda8c7e322c.webp?format=webp');
+      if(!initials) return;
+      if(initials.startsWith('http')){
+        el.avatar.style.background = `linear-gradient(135deg,var(--accent1),var(--accent2)), url(${initials}) center/cover`; el.avatar.textContent='';
+      } else {
+        el.avatar.textContent = initials.slice(0,3).toUpperCase();
+      }
+    });
+
+    switchLang('ru');
+
+    window.addEventListener('keydown',(e)=>{ if(e.key==='l' && (e.ctrlKey||e.metaKey)){ switchLang(lang==='ru'?'en':'ru'); } });
+
+  </script>
+</body>
+</html>
