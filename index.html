@@ -273,7 +273,7 @@
     });
 
     el.avatar.addEventListener('click', ()=>{
-      const initials = prompt('https/cdn.discordapp.com/avatars/1157331223144841359/b7938b8fdda146b061b82eda8c7e322c.webp?format=webp');
+      const initials = prompt('https://imgur.com/a/tCSGJQ4');
       if(!initials) return;
       if(initials.startsWith('http')){
         el.avatar.style.background = `linear-gradient(135deg,var(--accent1),var(--accent2)), url(${initials}) center/cover`; el.avatar.textContent='';
