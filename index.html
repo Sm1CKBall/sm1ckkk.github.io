@@ -164,7 +164,7 @@
 
   <main class="card" role="main">
     <aside class="profile">
-        <img class="avatar" id="avatar" src="https://imgur.com/a/RZUpa2M" alt="Avatar">
+        <img class="avatar" id="avatar" src="https://i.imgur.com/iGN8LgO.jpeg" alt="Avatar">
       <div class="name" id="name">Sm1CKBall</div>
       <div class="subtitle" id="title">Web Developer</div>
 
@@ -335,7 +335,7 @@
     });
 
     el.avatar.addEventListener('click', ()=>{
-      const initials = prompt('https://imgur.com/a/RZUpa2M');
+      const initials = prompt('https://i.imgur.com/iGN8LgO.jpeg');
       if(!initials) return;
       if(initials.startsWith('http')){
         el.avatar.style.background = `linear-gradient(135deg,var(--accent1),var(--accent2)), url(${initials}) center/cover`; el.avatar.textContent='';
